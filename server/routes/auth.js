@@ -106,6 +106,8 @@ router.post('/forgotpassword', async (req, res) => {
 
     res.json({ message: 'Password reset email sent successfully! Check your inbox.' });
   } catch (err) {
+    console.error('❌ Email send error:', err.message);
+    console.error('❌ Full error:', err);
     // If email sending fails, clean up the token
     const user = await User.findOne({ email: req.body.email });
     if (user) {
