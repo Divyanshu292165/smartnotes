@@ -1,0 +1,43 @@
+<!-- client/src/app/app.html -->
+<div class="app-shell" [class.dark-mode]="darkMode" id="app-shell">
+  <div class="app-container">
+    <!-- Header -->
+    <app-header
+      [darkMode]="darkMode"
+      (toggleDarkMode)="toggleDarkMode()"
+    ></app-header>
+
+    <!-- Toolbar: Search + Add Button -->
+    <div class="toolbar">
+      <app-search-bar (search)="onSearch($event)"></app-search-bar>
+      <button class="add-note-btn" (click)="openNewNote()" id="add-note-btn">
+        <span class="add-icon">+</span>
+        <span class="add-label">New Note</span>
+      </button>
+    </div>
+
+    <!-- Tag Filter -->
+    <app-tag-filter
+      [tags]="allTags"
+      [selectedTag]="selectedTag"
+      (tagSelected)="onTagSelected($event)"
+    ></app-tag-filter>
+
+    <!-- Notes List -->
+    <app-note-list
+      [notes]="filteredNotes"
+      (editNote)="onEditNote($event)"
+      (deleteNote)="onDeleteNote($event)"
+      (togglePin)="onTogglePin($event)"
+      (summarizeNote)="onSummarizeNote($event)"
+    ></app-note-list>
+
+    <!-- Note Editor Modal -->
+    <app-note-editor
+      [visible]="editorVisible"
+      [noteToEdit]="noteToEdit"
+      (save)="onSaveNote($event)"
+      (close)="closeEditor()"
+    ></app-note-editor>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<!-- client/src/app/components/tag-filter/tag-filter.component.html -->
+<div class="tag-filter-container" id="tag-filter">
+  @if (tags.length > 0) {
+    <div class="tag-chips">
+      <button
+        class="tag-chip all-chip"
+        [class.active]="!selectedTag"
+        (click)="onSelectTag(null)"
+        id="tag-filter-all"
+      >
+        All
+      </button>
+      @for (tag of tags; track tag) {
+        <button
+          class="tag-chip"
+          [class.active]="selectedTag === tag"
+          [style.--chip-color]="getTagColor(tag)"
+          (click)="onSelectTag(tag)"
+        >
+          {{ tag }}
+        </button>
+      }
+    </div>
+  }
+</div>

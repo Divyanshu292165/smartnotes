@@ -1,0 +1,21 @@
+<!-- client/src/app/components/header/header.component.html -->
+<header class="app-header" id="app-header">
+  <div class="header-left">
+    <span class="logo-icon">📝</span>
+    <h1 class="app-title">SmartNotes</h1>
+  </div>
+  <div class="header-right">
+    <button
+      class="dark-mode-toggle"
+      id="dark-mode-toggle"
+      (click)="onToggleDarkMode()"
+      [attr.aria-label]="darkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+    >
+      <span class="toggle-icon">{{ darkMode ? '☀️' : '🌙' }}</span>
+      <span class="toggle-label">{{ darkMode ? 'Light' : 'Dark' }}</span>
+    </button>
+    <button class="logout-btn" (click)="onLogout()" *ngIf="authService.isLoggedIn()" aria-label="Logout">
+      Sign Out
+    </button>
+  </div>
+</header>

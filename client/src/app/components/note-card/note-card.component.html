@@ -1,0 +1,63 @@
+<!-- client/src/app/components/note-card/note-card.component.html -->
+<div class="note-card" [class.pinned]="note.isPinned" id="note-card-{{ note._id }}">
+  <!-- Pin indicator -->
+  <div class="card-header">
+    <button
+      class="pin-btn"
+      [class.is-pinned]="note.isPinned"
+      (click)="onTogglePin()"
+      [attr.aria-label]="note.isPinned ? 'Unpin note' : 'Pin note'"
+    >
+      📌
+    </button>
+    <div class="card-actions">
+      <button class="action-btn edit-btn" (click)="onEdit()" aria-label="Edit note" title="Edit">
+        ✏️
+      </button>
+      <button class="action-btn delete-btn" (click)="onDelete()" aria-label="Delete note" title="Delete">
+        🗑️
+      </button>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <h3 class="note-title">{{ note.title }}</h3>
+
+  <!-- Content preview -->
+  <p class="note-content">{{ getContentPreview(note.content) }}</p>
+
+  <!-- Tags -->
+  @if (note.tags && note.tags.length > 0) {
+    <div class="note-tags">
+      @for (tag of note.tags; track tag) {
+        <span class="tag-pill" [style.background]="getTagColor(tag) + '20'" [style.color]="getTagColor(tag)">
+          {{ tag }}
+        </span>
+      }
+    </div>
+  }
+
+  <!-- Date -->
+  <div class="note-date">
+    {{ formatDate(note.createdAt) }}
+  </div>
+
+  <!-- Summarize button -->
+  <div class="summarize-section">
+    <button class="summarize-btn" (click)="onSummarize()" [disabled]="summarizing">
+      @if (summarizing && !note.summary) {
+        <span class="spinner"></span>
+        <span>Summarizing...</span>
+      } @else {
+        <span>✨ Summarize</span>
+      }
+    </button>
+
+    @if (note.summary) {
+      <div class="summary-result">
+        <strong>AI Summary:</strong>
+        <p>{{ note.summary }}</p>
+      </div>
+    }
+  </div>
+</div>

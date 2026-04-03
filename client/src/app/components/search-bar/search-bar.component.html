@@ -1,0 +1,18 @@
+<!-- client/src/app/components/search-bar/search-bar.component.html -->
+<div class="search-bar-container" id="search-bar">
+  <div class="search-input-wrapper">
+    <span class="search-icon">🔍</span>
+    <input
+      type="text"
+      id="search-input"
+      class="search-input"
+      placeholder="Search notes by title or content..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearchInput()"
+      autocomplete="off"
+    />
+    @if (searchTerm) {
+      <button class="clear-btn" (click)="clearSearch()" aria-label="Clear search">✕</button>
+    }
+  </div>
+</div>

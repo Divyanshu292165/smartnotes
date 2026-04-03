@@ -1,0 +1,22 @@
+<!-- client/src/app/components/note-list/note-list.component.html -->
+<div class="note-list-container" id="note-list">
+  @if (notes.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📝</div>
+      <h3>No notes yet</h3>
+      <p>Create your first note to get started!</p>
+    </div>
+  } @else {
+    <div class="notes-grid">
+      @for (note of notes; track note._id) {
+        <app-note-card
+          [note]="note"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)"
+          (togglePin)="onTogglePin($event)"
+          (summarize)="onSummarize($event)"
+        ></app-note-card>
+      }
+    </div>
+  }
+</div>

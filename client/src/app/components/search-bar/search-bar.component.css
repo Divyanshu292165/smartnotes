@@ -1,0 +1,84 @@
+/* client/src/app/components/search-bar/search-bar.component.css */
+.search-bar-container {
+  margin-bottom: 1.25rem;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.625rem 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.search-input-wrapper:focus-within {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.search-icon {
+  font-size: 1rem;
+  margin-right: 0.625rem;
+  opacity: 0.6;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  color: #334155;
+  background: transparent;
+  font-family: inherit;
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
+}
+
+.clear-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+:host-context(.dark-mode) .search-input-wrapper {
+  background: #2a2a3e;
+  border-color: #3d3d56;
+}
+
+:host-context(.dark-mode) .search-input-wrapper:focus-within {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+}
+
+:host-context(.dark-mode) .search-input {
+  color: #e2e8f0;
+}
+
+:host-context(.dark-mode) .search-input::placeholder {
+  color: #64748b;
+}
+
+:host-context(.dark-mode) .clear-btn:hover {
+  background: #3d3d56;
+  color: #e2e8f0;
+}
