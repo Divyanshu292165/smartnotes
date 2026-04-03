@@ -23,16 +23,15 @@
         </div>
 
         <div class="form-group">
-          <label for="note-content-input">Content</label>
-          <textarea
-            id="note-content-input"
-            class="form-input form-textarea"
-            placeholder="Write your note content..."
+          <label>Content</label>
+          <quill-editor
             [(ngModel)]="content"
             name="content"
-            required
-            rows="6"
-          ></textarea>
+            [modules]="quillModules"
+            placeholder="Write your note content..."
+            theme="snow"
+            class="quill-rich-editor"
+          ></quill-editor>
         </div>
 
         <div class="form-group">
@@ -55,7 +54,7 @@
             type="submit"
             class="btn btn-primary"
             id="save-note-btn"
-            [disabled]="!title.trim() || !content.trim()"
+            [disabled]="!title.trim() || isContentEmpty"
           >
             {{ isEditing ? 'Update Note' : 'Create Note' }}
           </button>

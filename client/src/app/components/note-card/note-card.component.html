@@ -23,8 +23,8 @@
   <!-- Title -->
   <h3 class="note-title">{{ note.title }}</h3>
 
-  <!-- Content preview -->
-  <p class="note-content">{{ getContentPreview(note.content) }}</p>
+  <!-- Content preview (renders rich HTML safely) -->
+  <div class="note-content rich-preview" [innerHTML]="getContentPreview(note.content)"></div>
 
   <!-- Tags -->
   @if (note.tags && note.tags.length > 0) {

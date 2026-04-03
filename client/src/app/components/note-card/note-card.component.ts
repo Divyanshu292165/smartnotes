@@ -64,6 +64,9 @@ export class NoteCardComponent {
   }
 
   getContentPreview(content: string): string {
-    return content.length > 150 ? content.substring(0, 150) + '...' : content;
+    // Strip HTML tags for a clean text preview on cards
+    const stripped = content.replace(/<[^>]*>/g, '');
+    const truncated = stripped.length > 150 ? stripped.substring(0, 150) + '...' : stripped;
+    return truncated;
   }
 }

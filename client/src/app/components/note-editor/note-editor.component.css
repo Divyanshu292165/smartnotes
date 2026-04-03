@@ -211,3 +211,66 @@
 :host-context(.dark-mode) .btn-secondary:hover {
   background: #3d3d56;
 }
+
+/* ─── Quill Rich Text Editor ─── */
+:host ::ng-deep .quill-rich-editor .ql-toolbar {
+  border: 2px solid #e2e8f0;
+  border-radius: 10px 10px 0 0;
+  background: #f8fafc;
+  font-family: inherit;
+}
+
+:host ::ng-deep .quill-rich-editor .ql-container {
+  border: 2px solid #e2e8f0;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  min-height: 140px;
+  background: #f8fafc;
+  color: #334155;
+}
+
+:host ::ng-deep .quill-rich-editor .ql-container:focus-within {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+:host ::ng-deep .quill-rich-editor .ql-editor {
+  min-height: 140px;
+  line-height: 1.6;
+}
+
+:host ::ng-deep .quill-rich-editor .ql-editor.ql-blank::before {
+  color: #94a3b8;
+  font-style: normal;
+}
+
+/* Dark mode Quill */
+:host-context(.dark-mode) ::ng-deep .quill-rich-editor .ql-toolbar {
+  background: #2a2a3e;
+  border-color: #3d3d56;
+}
+
+:host-context(.dark-mode) ::ng-deep .quill-rich-editor .ql-toolbar .ql-stroke {
+  stroke: #94a3b8;
+}
+
+:host-context(.dark-mode) ::ng-deep .quill-rich-editor .ql-toolbar .ql-fill {
+  fill: #94a3b8;
+}
+
+:host-context(.dark-mode) ::ng-deep .quill-rich-editor .ql-toolbar .ql-picker-label {
+  color: #94a3b8;
+}
+
+:host-context(.dark-mode) ::ng-deep .quill-rich-editor .ql-container {
+  background: #2a2a3e;
+  border-color: #3d3d56;
+  color: #e2e8f0;
+}
+
+:host-context(.dark-mode) ::ng-deep .quill-rich-editor .ql-editor.ql-blank::before {
+  color: #64748b;
+}
+

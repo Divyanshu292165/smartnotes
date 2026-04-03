@@ -2,12 +2,13 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { QuillModule } from 'ngx-quill';
 import { Note } from '../../models/note.model';
 
 @Component({
   selector: 'app-note-editor',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, QuillModule],
   templateUrl: './note-editor.component.html',
   styleUrl: './note-editor.component.css'
 })
@@ -20,6 +21,19 @@ export class NoteEditorComponent implements OnChanges {
   title = '';
   content = '';
   tagsInput = '';
+
+  // Quill toolbar configuration
+  quillModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'header': [1, 2, 3, false] }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'color': [] }, { 'background': [] }],
+      ['blockquote', 'code-block'],
+      ['link'],
+      ['clean']
+    ]
+  };
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['noteToEdit'] || changes['visible']) {
@@ -37,8 +51,15 @@ export class NoteEditorComponent implements OnChanges {
     return !!this.noteToEdit;
   }
 
+  get isContentEmpty(): boolean {
+    if (!this.content) return true;
+    // Strip HTML tags and check if remaining text is empty
+    const stripped = this.content.replace(/<[^>]*>/g, '').trim();
+    return stripped.length === 0;
+  }
+
   onSave() {
-    if (!this.title.trim() || !this.content.trim()) return;
+    if (!this.title.trim() || this.isContentEmpty) return;
 
     const tags = this.tagsInput
       .split(',')
@@ -47,7 +68,7 @@ export class NoteEditorComponent implements OnChanges {
 
     const noteData: Partial<Note> = {
       title: this.title.trim(),
-      content: this.content.trim(),
+      content: this.content,
       tags
     };
 
