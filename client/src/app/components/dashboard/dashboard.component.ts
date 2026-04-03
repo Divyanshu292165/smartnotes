@@ -162,6 +162,32 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  onShareNote(note: Note) {
+    this.notesService.shareNote(note._id!).subscribe({
+      next: (updatedNote) => {
+        // Update local reference to show it's shared
+        const idx = this.notes.findIndex(n => n._id === note._id);
+        if (idx !== -1) {
+          this.notes[idx].isShared = true;
+          this.notes[idx].shareToken = updatedNote.shareToken;
+          this.applyFilters();
+        }
+
+        // Generate public link
+        const shareLink = `${window.location.origin}/shared/${updatedNote.shareToken}`;
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(shareLink).then(() => {
+          alert('Public link copied to clipboard!\n\n' + shareLink);
+        }).catch(err => {
+          console.error('Failed to copy to clipboard', err);
+          alert('Note is shared! Public link:\n' + shareLink);
+        });
+      },
+      error: (err) => console.error('Failed to share note:', err)
+    });
+  }
+
   closeEditor() {
     this.editorVisible = false;
     this.noteToEdit = null;

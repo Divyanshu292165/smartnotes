@@ -1,0 +1,33 @@
+<div class="shared-mode-container">
+  @if (loading) {
+    <div class="loading-state">Loading note...</div>
+  } @else if (error) {
+    <div class="error-state">
+      <h2>Oops!</h2>
+      <p>{{ error }}</p>
+      <a routerLink="/login" class="btn">Go to SmartNotes</a>
+    </div>
+  } @else if (note) {
+    <div class="shared-note-card">
+      <div class="public-badge">Public Note</div>
+      <h1 class="note-title">{{ note.title }}</h1>
+      <div class="note-meta">
+        <span class="date">{{ formatDate(note.createdAt) }}</span>
+        @if (note.tags?.length) {
+          <div class="tags">
+            @for (tag of note.tags; track tag) {
+              <span class="tag-pill">{{ tag }}</span>
+            }
+          </div>
+        }
+      </div>
+      
+      <div class="note-content" [innerHTML]="note.content"></div>
+      
+      <div class="footer-cta">
+        <p>Want to create your own notes?</p>
+        <a routerLink="/" class="btn-primary">Try SmartNotes Free</a>
+      </div>
+    </div>
+  }
+</div>
