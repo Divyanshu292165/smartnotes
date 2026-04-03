@@ -8,7 +8,10 @@ const sendEmail = async (options) => {
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS // Use an App Password, NOT your real Gmail password
-    }
+    },
+    connectionTimeout: 10000,  // 10 seconds to connect
+    greetingTimeout: 10000,    // 10 seconds for greeting
+    socketTimeout: 10000       // 10 seconds for socket
   });
 
   const mailOptions = {
@@ -18,7 +21,12 @@ const sendEmail = async (options) => {
     html: options.html
   };
 
+  console.log('📧 Attempting to send email to:', options.email);
+  console.log('📧 Using EMAIL_USER:', process.env.EMAIL_USER ? 'SET' : 'NOT SET');
+  console.log('📧 Using EMAIL_PASS:', process.env.EMAIL_PASS ? 'SET (hidden)' : 'NOT SET');
+
   await transporter.sendMail(mailOptions);
+  console.log('✅ Email sent successfully to:', options.email);
 };
 
 module.exports = sendEmail;
