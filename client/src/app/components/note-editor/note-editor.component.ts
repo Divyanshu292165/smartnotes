@@ -92,6 +92,49 @@ export class NoteEditorComponent implements OnChanges {
     }
   }
 
+  onEditorCreated(editor: any) {
+    // Map Quill toolbar button classes to readable tooltip labels
+    const tooltips: Record<string, string> = {
+      'ql-bold': 'Bold',
+      'ql-italic': 'Italic',
+      'ql-underline': 'Underline',
+      'ql-strike': 'Strikethrough',
+      'ql-blockquote': 'Blockquote',
+      'ql-code-block': 'Code Block',
+      'ql-link': 'Insert Link',
+      'ql-clean': 'Clear Formatting',
+      'ql-list[value="ordered"]': 'Ordered List',
+      'ql-list[value="bullet"]': 'Bullet List',
+    };
+
+    const toolbar = editor.container.previousSibling;
+    if (!toolbar) return;
+
+    // Set title on simple buttons
+    for (const [cls, label] of Object.entries(tooltips)) {
+      if (cls.includes('[')) {
+        // Attribute selector like ql-list[value="ordered"]
+        const [base, attr] = cls.split('[');
+        const val = attr.replace('value="', '').replace('"]', '');
+        const btn = toolbar.querySelector(`.${base}[value="${val}"]`);
+        if (btn) btn.setAttribute('title', label);
+      } else {
+        const btn = toolbar.querySelector(`.${cls}`);
+        if (btn) btn.setAttribute('title', label);
+      }
+    }
+
+    // Header picker
+    const headerPicker = toolbar.querySelector('.ql-header');
+    if (headerPicker) headerPicker.setAttribute('title', 'Heading Size');
+
+    // Color pickers
+    const colorPicker = toolbar.querySelector('.ql-color');
+    if (colorPicker) colorPicker.setAttribute('title', 'Text Color');
+    const bgPicker = toolbar.querySelector('.ql-background');
+    if (bgPicker) bgPicker.setAttribute('title', 'Background Color');
+  }
+
   private resetForm() {
     this.title = '';
     this.content = '';
