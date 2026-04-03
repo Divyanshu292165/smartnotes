@@ -54,6 +54,14 @@ export class AuthService {
     );
   }
 
+  forgotPassword(email: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/forgotpassword`, { email });
+  }
+
+  resetPassword(token: string, password: string): Observable<{ message: string; token: string }> {
+    return this.http.put<{ message: string; token: string }>(`${this.apiUrl}/resetpassword/${token}`, { password });
+  }
+
   logout() {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('smartnotes-user');
