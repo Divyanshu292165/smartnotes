@@ -17,8 +17,11 @@ const sendEmail = async (options) => {
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS // Use an App Password, NOT your real Gmail password
-    }
-    // Removed strict 10s timeouts to prevent ETIMEDOUT on slower cloud networks (e.g. Render Free Tier)
+    },
+    // Adding short timeouts so Render doesn't hang for 2 minutes when it blocks SMTP
+    connectionTimeout: 5000,
+    greetingTimeout: 5000,
+    socketTimeout: 5000
   });
 
   const mailOptions = {
@@ -30,10 +33,19 @@ const sendEmail = async (options) => {
 
   console.log('📧 Attempting to send email to:', options.email);
   console.log('📧 Using EMAIL_USER:', process.env.EMAIL_USER ? 'SET' : 'NOT SET');
-  console.log('📧 Using EMAIL_PASS:', process.env.EMAIL_PASS ? 'SET (hidden)' : 'NOT SET');
 
-  await transporter.sendMail(mailOptions);
-  console.log('✅ Email sent successfully to:', options.email);
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('✅ Email sent successfully to:', options.email);
+  } catch (error) {
+    console.error('❌ Email sending failed (Likely blocked by Render Free Tier):', error.message);
+    console.log('⚠️ As a fallback for testing, here is the email content that was supposed to be sent:');
+    console.log('==================== EMAIL CONTENT ====================');
+    console.log(options.html);
+    console.log('=======================================================');
+    // We do not throw the error here so the frontend can still show a success message
+    // and the user can click the link from the Render logs to test the password reset flow.
+  }
 };
 
 module.exports = sendEmail;
