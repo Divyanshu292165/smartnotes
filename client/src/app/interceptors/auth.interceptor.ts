@@ -8,7 +8,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = authService.getToken();
 
   // If we have a token and the url is targeting our backend, append Authorization header
-  if (token && req.url.startsWith('http://localhost:5000/api')) {
+  if (token && req.url.startsWith('https://smartnotes-yuwt.onrender.com/api')) {
     const authReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`

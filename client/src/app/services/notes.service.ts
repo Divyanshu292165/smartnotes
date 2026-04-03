@@ -8,7 +8,7 @@ import { Note } from '../models/note.model';
   providedIn: 'root'
 })
 export class NotesService {
-  private apiUrl = 'http://localhost:5000/api/notes';
+  private apiUrl = 'https://smartnotes-yuwt.onrender.com/api/notes';
 
   constructor(private http: HttpClient) {}
 
