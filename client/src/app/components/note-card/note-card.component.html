@@ -11,6 +11,9 @@
       📌
     </button>
     <div class="card-actions">
+      <button class="action-btn share-btn" (click)="onShare()" aria-label="Share note" title="Share" [disabled]="sharing">
+        🔗
+      </button>
       <button class="action-btn edit-btn" (click)="onEdit()" aria-label="Edit note" title="Edit">
         ✏️
       </button>

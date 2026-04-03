@@ -16,8 +16,10 @@ export class NoteCardComponent {
   @Output() delete = new EventEmitter<string>();
   @Output() togglePin = new EventEmitter<Note>();
   @Output() summarize = new EventEmitter<Note>();
+  @Output() share = new EventEmitter<Note>();
 
   summarizing = false;
+  sharing = false;
 
   private tagColorPalette = [
     '#667eea', '#f093fb', '#4facfe', '#43e97b',
@@ -32,6 +34,12 @@ export class NoteCardComponent {
     }
     const index = Math.abs(hash) % this.tagColorPalette.length;
     return this.tagColorPalette[index];
+  }
+
+  onShare() {
+    this.sharing = true;
+    this.share.emit(this.note);
+    setTimeout(() => this.sharing = false, 500);
   }
 
   onEdit() {

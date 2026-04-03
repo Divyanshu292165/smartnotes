@@ -24,6 +24,15 @@ const noteSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  isShared: {
+    type: Boolean,
+    default: false
+  },
+  shareToken: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
   createdAt: {
     type: Date,
     default: Date.now

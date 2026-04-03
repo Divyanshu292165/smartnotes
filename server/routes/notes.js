@@ -154,4 +154,41 @@ router.post('/:id/summarize', protect, async (req, res) => {
   }
 });
 
+// GET /api/notes/shared/:shareToken — get a shared note publicly
+router.get('/shared/:shareToken', async (req, res) => {
+  try {
+    const note = await Note.findOne({ shareToken: req.params.shareToken, isShared: true });
+    if (!note) {
+      return res.status(404).json({ message: 'Note not found or sharing has been disabled' });
+    }
+    res.json(note);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// PATCH /api/notes/:id/share — toggle sharing and generate token
+router.patch('/:id/share', protect, async (req, res) => {
+  try {
+    const note = await Note.findOne({ _id: req.params.id, user: req.user.id });
+    if (!note) {
+      return res.status(404).json({ message: 'Note not found or unauthorized' });
+    }
+
+    if (!note.isShared) {
+      note.isShared = true;
+      if (!note.shareToken) {
+        note.shareToken = require('crypto').randomBytes(16).toString('hex');
+      }
+    } else {
+      note.isShared = false;
+    }
+    
+    await note.save();
+    res.json(note);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 module.exports = router;

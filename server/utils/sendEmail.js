@@ -1,5 +1,10 @@
 // server/utils/sendEmail.js
 const nodemailer = require('nodemailer');
+const dns = require('dns');
+
+// Force Node.js DNS resolution to prefer IPv4 over IPv6.
+// This strongly prevents the ENETUNREACH errors on ipv6 networks.
+dns.setDefaultResultOrder('ipv4first');
 
 const sendEmail = async (options) => {
   // Create a transporter using Gmail SMTP (or any SMTP provider)

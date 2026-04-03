@@ -35,4 +35,12 @@ export class NotesService {
   summarizeNote(id: string): Observable<{ summary: string }> {
     return this.http.post<{ summary: string }>(`${this.apiUrl}/${id}/summarize`, {});
   }
+
+  shareNote(id: string): Observable<Note> {
+    return this.http.patch<Note>(`${this.apiUrl}/${id}/share`, {});
+  }
+
+  getSharedNote(token: string): Observable<Note> {
+    return this.http.get<Note>(`${this.apiUrl}/shared/${token}`);
+  }
 }

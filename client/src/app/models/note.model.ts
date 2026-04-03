@@ -8,4 +8,6 @@ export interface Note {
   createdAt?: string;
   updatedAt?: string;
   summary?: string;
+  isShared?: boolean;
+  shareToken?: string;
 }

@@ -17,6 +17,7 @@ export class NoteListComponent {
   @Output() deleteNote = new EventEmitter<string>();
   @Output() togglePin = new EventEmitter<Note>();
   @Output() summarizeNote = new EventEmitter<Note>();
+  @Output() shareNote = new EventEmitter<Note>();
 
   onEdit(note: Note) {
     this.editNote.emit(note);
@@ -32,5 +33,9 @@ export class NoteListComponent {
 
   onSummarize(note: Note) {
     this.summarizeNote.emit(note);
+  }
+
+  onShare(note: Note) {
+    this.shareNote.emit(note);
   }
 }
