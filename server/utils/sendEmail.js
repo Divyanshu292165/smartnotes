@@ -10,16 +10,15 @@ const sendEmail = async (options) => {
   // Create a transporter using Gmail SMTP (or any SMTP provider)
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    family: 4, // Force IPv4 to avoid ENETUNREACH on IPv6 connections
+    port: 587,
+    secure: false, // Use false for port 587
+    requireTLS: true,
+    family: 4, // Force IPv4 to avoid ENETUNREACH on IPv6 connections locally
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS // Use an App Password, NOT your real Gmail password
-    },
-    connectionTimeout: 10000,  // 10 seconds to connect
-    greetingTimeout: 10000,    // 10 seconds for greeting
-    socketTimeout: 10000       // 10 seconds for socket
+    }
+    // Removed strict 10s timeouts to prevent ETIMEDOUT on slower cloud networks (e.g. Render Free Tier)
   });
 
   const mailOptions = {
